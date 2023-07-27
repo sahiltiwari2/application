@@ -13,20 +13,37 @@ root.geometry("700x500")
 global username_input
 global password_input
 
-def sideframe2_clock():
-        
 
-    side_frame2 = customtkinter.CTkFrame(master = frame, fg_color = "#E3E3E3") # this is a bad way to crate a side frame things will go wrong when we resize the window
+
+
+
+
+def sideframe2_clock():
+    side_frame2 = customtkinter.CTkFrame(master = frame, fg_color = "#E3E3E3") 
     side_frame2.pack(padx = 10, pady = 10, fill ="both", expand = True)
 
-    label = customtkinter.CTkLabel(master= side_frame2, text = "" )
-    label.pack(pady = 100)
+    for widgets in side_frame2.winfo_children():# to clear the frame
+        widgets.destroy()
+
 
     analog_canvas = tk.Canvas(side_frame2,width = 400, height = 400, bg = 'grey') # '#E3E3E3' color
     analog_canvas.pack()
 
     digital_canvas = tk.Canvas(side_frame2, width = 400, height =100, bg = "#E3E3E3")
     digital_canvas.pack()
+
+def sideframe2_timer():
+    side_frame2 = customtkinter.CTkFrame(master = frame, fg_color = "#E3E3E3") 
+    side_frame2.pack(padx = 10, pady = 10, fill ="both", expand = True)
+
+
+    analog_canvas = tk.Canvas(side_frame2,width = 400, height = 400, bg = 'red') # '#E3E3E3' color
+    analog_canvas.pack()
+
+    digital_canvas = tk.Canvas(side_frame2, width = 400, height =100, bg = "red")
+    digital_canvas.pack()
+
+
 
 
 
@@ -45,14 +62,15 @@ def main_app():
         label = customtkinter.CTkLabel(master= side_frame, text = "" )
         label.pack(pady = 20)
 
-        focus_button = customtkinter.CTkButton(master= side_frame, 
+        focus_button = customtkinter.CTkButton(master = side_frame, 
                                        text = "Focus session", 
                                        font = ("Arial", 20),
                                        fg_color = '#D0F4FF', 
                                        text_color= 'black', 
                                        width = 250,
                                        height = 60,
-                                       hover_color = "#9BB5BD"
+                                       hover_color = "#9BB5BD",
+                                       #command= sideframe2_timer
                                        )
         focus_button.pack()
                                        
@@ -65,11 +83,25 @@ def main_app():
                                        width = 250,
                                        height = 60,
                                        hover_color = "#9BB5BD",
-                                       command = sideframe2_clock
+                                       #command= sideframe2_clock
                                        )
         clock_button.pack()
 
+        # this is where switch frame are being crated
+        sideframe_clock = frame(frame)
+        sideframe_timer = frame(frame)
 
+        sideframe_clock.grid(row = 0, cloumn = 0)
+        sideframe_timer.grid(row = 0, cloumn = 0)
+
+        lbl = label(sideframe_clock, text = "Yo loo")
+        lbl.pack(pady = 20)
+
+        lbl = label(sideframe_timer, text = "Yo loo111111")
+        lbl.pack(pady = 20)
+        
+
+        sideframe_clock.tkraise()
 
 
 
