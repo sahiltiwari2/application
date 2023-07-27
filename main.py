@@ -1,7 +1,4 @@
 import customtkinter
-import tkinter as tk
-import time
-import math
 
 customtkinter.set_appearance_mode('light')
 customtkinter.set_default_color_theme("dark-blue")
@@ -9,12 +6,6 @@ customtkinter.set_default_color_theme("dark-blue")
 root = customtkinter.CTk()
 root.title("Focus application")
 root.geometry("700x500")
-
-global username_input
-global password_input
-
-
-
 
 
 
@@ -48,25 +39,25 @@ def sideframe2_timer():
 
 
 def main_app():
-    username = username_input.get() # gets the text in the box named username_input
-    password = password_input.get()
+"""
     if username == "" and password == "": #  set userid and passworrd later
         for widgets in frame.winfo_children():# to clear the frame
             widgets.destroy()
+"""
 
-        side_frame = customtkinter.CTkFrame(master = frame, fg_color= "#D0F4FF") # this is a bad way to crate a side frame things will go wrong when we resize the window
-        side_frame.pack(side = customtkinter.LEFT)
-        side_frame.pack_propagate(False)
-        side_frame.configure(width = 250, height = 1000)
+    side_frame = customtkinter.CTkFrame(master = frame, fg_color= "#D0F4FF") # this is a bad way to crate a side frame things will go wrong when we resize the window
+    side_frame.pack(side = customtkinter.LEFT)
+    side_frame.pack_propagate(False)
+    side_frame.configure(width = 250, height = 1000)
 
-        label = customtkinter.CTkLabel(master= side_frame, text = "" )
-        label.pack(pady = 20)
+    label = customtkinter.CTkLabel(master= side_frame, text = "" )
+    label.pack(pady = 20)
 
-        focus_button = customtkinter.CTkButton(master = side_frame, 
-                                       text = "Focus session", 
-                                       font = ("Arial", 20),
-                                       fg_color = '#D0F4FF', 
-                                       text_color= 'black', 
+    focus_button = customtkinter.CTkButton(master = side_frame, 
+                                   text = "Focus session", 
+                                    font = ("Arial", 20),
+                                   fg_color = '#D0F4FF', 
+                                   text_color= 'black', 
                                        width = 250,
                                        height = 60,
                                        hover_color = "#9BB5BD",
