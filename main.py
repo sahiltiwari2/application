@@ -1,82 +1,99 @@
-import customtkinter
 import tkinter as tk
-import time
-import math
+import customtkinter as ctk
 
-customtkinter.set_appearance_mode('light')
-customtkinter.set_default_color_theme("dark-blue")
+root = tk.Tk()
+root.geometry("700x500")
+root.title("Focus Application")
+
+def focus_page():
+    focus_frame = tk.Frame(main_frame)
+    focus_frame.pack(pady = 20)
+
+    label = ctk.CTkLabel(focus_frame, text = "this is focus frame")
+    label.pack()
+
+def clock_page():
+    clock_frame = tk.Frame(main_frame)
+    clock_frame.pack(pady = 20)
+
+    label = ctk.CTkLabel(clock_frame, text = "this is clock frame")
+    label.pack()
+
+def about_page():
+    about_frame = tk.Frame(main_frame)
+    about_frame.pack(pady = 20)
+
+    label = ctk.CTkLabel(about_frame, text = "this is about frame")
+    label.pack()
+
+def github_page():
+    github_frame = tk.Frame(main_frame)
+    github_frame.pack(pady = 20)
+
+    label = ctk.CTkLabel(github_frame, text = "this is github frame")
+    label.pack()
+
+def clear_frame():
+   for widgets in main_frame.winfo_children():
+      widgets.destroy()
+
+def hide_selectors():
+    focus_button.configure(border_width = 0, fg_color = "#DAF9FF")
+    clock_button.configure(border_width = 0, fg_color = "#DAF9FF")
+    about_button.configure(border_width = 0, fg_color = "#DAF9FF")
+    github_button.configure(border_width = 0, fg_color = "#DAF9FF")
+
+    focus_indicate.config(bg = "#DAF9FF")
+    clock_indicate.config(bg = "#DAF9FF")
+    about_indicate.config(bg = "#DAF9FF")
+    github_indicate.config(bg = "#DAF9FF")
 
 
-class FocusFrame(customtkinter.CTkFrame):
-    def __init__(self, master, *args, **kwargs):
-        super().__init__(master=master, *args, **kwargs)
 
-        label1 = customtkinter.CTkLabel(master=self, text="Abe sale", text_color='black', font=("Arial", 20))
-        label1.pack(pady=20)
+def selector(button, label, page):
+    hide_selectors()
+    label.config(bg = "black")
+    button.configure(border_width = 2, fg_color = "#D9D9D9")
+    clear_frame()
+    page()
 
-        clock_button = customtkinter.CTkButton(
-            master=self,
-            text="Clock",
-            font=("Arial", 20),
-            fg_color='#D0F4FF',
-            text_color='black',
-            width=250,
-            height=60,
-            hover_color="#9BB5BD",
-            # command=sideframe2_clock
-        )
-        clock_button.pack()
-class Appliaction(tk.Tk):
-    def __init__(self):
-        super().__init__()
+# this is the side frame 
+side_panel = tk.Frame(root, background = "#DAF9FF")
+side_panel.pack(side = tk.LEFT)
+side_panel.pack_propagate(False)
+side_panel.configure(width = 200, height = 500)
 
-        self.title("Focus application")
-        self.geometry("1080x900")
-        frame = customtkinter.CTkFrame(master=self)
-        frame.pack(padx=20, pady=20, fill="both", expand=True)
-        self.main_app(frame)
 
-    def main_app(self, frame):
-        self.side_frame = customtkinter.CTkFrame(master=frame, fg_color="#D0F4FF") 
-        self.side_frame.pack(side=customtkinter.LEFT)
-        self.side_frame.pack_propagate(False)
-        self.side_frame.configure(width=250, height=1000)
+focus_button = ctk.CTkButton(side_panel, text = "Focus timer", fg_color =  "transparent", text_color = "black", hover_color = "#E3E3E3", corner_radius = 2, font= ("Bold", 20), height= 40, border_color = "Black", border_width = 0, command =lambda: selector(focus_button,focus_indicate, focus_page))
+focus_button.place(x = 30, y = 50)
 
-        label = customtkinter.CTkLabel(master=self.side_frame, text="")
-        label.pack(pady=20)
+focus_indicate = tk.Label(side_panel, text = "", bg = "#DAF9FF")
+focus_indicate.place(x = 22, y = 50, height = 40)
 
-        focus_button = customtkinter.CTkButton(
-            master=self.side_frame, 
-            text="Focus session", 
-            font=("Arial", 20),
-            fg_color='#D0F4FF', 
-            text_color='black', 
-            width=250,
-            height=60,
-            hover_color="#9BB5BD",
-            command=self.show_focus_frame
-        )
-        focus_button.pack()
+clock_button = ctk.CTkButton(side_panel, text = "Clock", fg_color =  "transparent", text_color = "black", hover_color = "#E3E3E3", corner_radius = 2, font= ("Bold", 20), height = 40, border_color = "Black", border_width = 0, command =lambda: selector(clock_button,clock_indicate, clock_page))
+clock_button.place(x = 30, y = 100)
 
-        clock_button = customtkinter.CTkButton(
-            master=self.side_frame, 
-            text="Clock", 
-            font=("Arial", 20),
-            fg_color='#D0F4FF', 
-            text_color='black', 
-            width=250,
-            height=60,
-            hover_color="#9BB5BD",
-            #command=sideframe2_clock
-        )
-        clock_button.pack()
+clock_indicate = tk.Label(side_panel, text = "", bg = "#DAF9FF")
+clock_indicate.place(x = 22, y = 100, height = 40)
 
-    def show_focus_frame(self):
-        for widget in self.side_frame.winfo_children():
-            widget.destroy()
-        focus_frame=FocusFrame(master=self.side_frame)
-        focus_frame.pack()
+about_button = ctk.CTkButton(side_panel, text = "About Us", fg_color =  "transparent", text_color = "black", hover_color = "#E3E3E3", corner_radius = 2, font= ("Bold", 20), height = 40, border_color = "Black", border_width = 0, command =lambda: selector(about_button,about_indicate, about_page))
+about_button.place(x = 30, y = 150)
 
-if __name__ == "__main__":
-    app = Appliaction()
-    app.mainloop()
+about_indicate = tk.Label(side_panel, text = "", bg = "#DAF9FF")
+about_indicate.place(x = 22, y = 150, height = 40)
+
+github_button = ctk.CTkButton(side_panel, text = "Git hub", fg_color =  "transparent", text_color = "black", hover_color = "#E3E3E3", corner_radius = 2, font= ("Bold", 20), height = 40, border_color = "Black", border_width = 0, command =lambda: selector(github_button,github_indicate, github_page))
+github_button.place(x = 30, y = 425)
+
+github_indicate = tk.Label(side_panel, text = "", bg = "#DAF9FF")
+github_indicate.place(x = 22, y = 425, height = 40)
+
+# this is the main frame
+main_frame = tk.Frame(root, background = "#EDEDED", highlightbackground = "#D8E3FF", highlightthickness = 2)
+main_frame.pack(side = tk.LEFT)
+main_frame.propagate(False)
+main_frame.configure(width = 500, height = 500)
+
+
+
+root.mainloop()
