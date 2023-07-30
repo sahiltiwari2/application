@@ -1,23 +1,87 @@
 import tkinter as tk
 import customtkinter as ctk
+import time
+import math
 
 root = tk.Tk()
 root.geometry("700x500")
 root.title("Focus Application")
 
+def countdown(count):
+    label_w['text'] = time.strftime('%H:%M:%S', time.gmtime(count))
+    if count > 0:
+        root.after(1000, countdown, count-1)
+
+def start_timer():
+    hour_str = hour_entry.get()
+    min_str = min_entry.get()
+    sec_str = sec_entry.get()
+    try:
+        hour_int = int(hour_str) if hour_str else 0
+        min_int = int(min_str) if min_str else 0
+        sec_int = int(sec_str) if sec_str else 0
+        total_sec = hour_int * 3600 + min_int * 60 + sec_int
+        countdown(total_sec)
+    except ValueError:
+        pass
+
+def clock(my_label):
+    hour = time.strftime("%I")
+    minute = time.strftime("%M")
+    second = time.strftime("%S")
+    am_pm = time.strftime("%p")
+    day = time.strftime("%A")
+
+    my_label.config(text=hour + ":" + minute + ":" + second + " " + am_pm)
+    my_label.after(1000, clock)
+
+
+
+
 def focus_page():
     focus_frame = tk.Frame(main_frame)
     focus_frame.pack(pady = 20)
 
-    label = ctk.CTkLabel(focus_frame, text = "this is focus frame")
-    label.pack()
+    frame = tk.Frame(focus_frame, bd=4, relief="groove")
+    frame.pack(padx=20, pady=20)
+
+    entry_label = tk.Label(focus_frame, text="Enter time:", font=("Helvetica", 14), bg="#F0F0F0")
+    entry_label.pack(pady=10)
+
+    hour_label = tk.Label(focus_frame, text="Hours:", font=("Helvetica", 14), bg="#F0F0F0")
+    hour_label.pack()
+    global hour_entry
+    hour_entry = tk.Entry(focus_frame, font=("Helvetica", 14))
+    hour_entry.pack()
+
+    min_label = tk.Label(focus_frame, text="Minutes:", font=("Helvetica", 14), bg="#F0F0F0")
+    min_label.pack()
+    global min_entry
+    min_entry = tk.Entry(focus_frame, font=("Helvetica", 14))
+    min_entry.pack()
+
+    sec_label = tk.Label(focus_frame, text="Seconds:", font=("Helvetica", 14), bg="#F0F0F0")
+    sec_label.pack()
+    global sec_entry
+    sec_entry = tk.Entry(focus_frame, font=("Helvetica", 14))
+    sec_entry.pack(pady=10)
+
+    global label_w
+    label_w = tk.Label(focus_frame, text="00:00:00", font=("Courier", 50), bg="#F0F0F0")
+    label_w.pack(pady=20)
+
+    start_button = tk.Button(focus_frame, text="Start", font=("Helvetica", 14), command=start_timer)
+    start_button.pack(pady=10)
 
 def clock_page():
+    global clock_frame
     clock_frame = tk.Frame(main_frame)
     clock_frame.pack(pady = 20)
 
-    label = ctk.CTkLabel(clock_frame, text = "this is clock frame")
-    label.pack()
+    my_label = tk.Label(clock_frame, text="", font=("Helvetica", 48), fg="green")
+    my_label.pack(pady=20)
+    clock(my_label)
+
 
 def about_page():
     about_frame = tk.Frame(main_frame)
